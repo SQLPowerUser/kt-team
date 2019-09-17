@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+	<link rel="shortcut icon" href="etc/to-do-list-icon.png" type="image/x-icon">
+	<title>Todo List</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+	<div id="appV">
+		<todo></todo>
+	</div>
+
+	<template id="todo-template">
+		<div>
+			<div class="environ">
+				<p class="bold-1-1">Задачи</p>
+				<navigation></navigation>
+			</div>
+
+			<div class="central-part space-b">
+				<ol>
+					<li
+						v-for="el in paginatedNotes"
+						class="edit-box"
+						tabindex="-1"
+						@mouseleave="clearFocus($event)"
+					>{{ el.idx }}) {{ el.text }}
+						<span class="delete-note" @click="deleteNote(el.idx)"></span>
+					</li>
+				</ol>
+
+				<textarea
+					class="edit-box memo"
+					placeholder="Enter a title for this card..."
+					v-model="newNote"
+					@keyup.enter="addCard"
+				></textarea>
+			</div> <!-- class="central-part" -->
+
+			<div class="environ">
+				<div
+					class="button bold-1-1"
+					:class="{ 'button-disabled': trimNote == '' }"
+					@click="addCard"
+				>Add Card</div>
+
+				<navigation></navigation>
+			</div>
+
+		</div>
+	</template> <!-- id="todo-template" -->
+
+
+	<template id="navigation-template">
+		<div class="navigation">
+			<p v-if="hasPrev()" @click.prevent="prevPage()"> < </p>
+			<p v-if="hasFirst()" @click.prevent="changePage(1)">1</p>
+			<p v-if="hasFirst()" class="cursor-default">...</p>
+
+			<p
+				v-for="page in pages"
+				@click.prevent="changePage(page)"
+				:class="{ 'active-page': current == page }"
+			> {{ page }} </p>
+
+			<p v-if="hasLast()" class="cursor-default">...</p>
+			<p v-if="hasLast()" @click.prevent="changePage(pageCount)">{{ pageCount }}</p>
+			<p v-if="hasNext()" @click.prevent="nextPage"> > </p>
+
+		</div>
+	</template> <!-- id="navigation-template"> -->
+
+
+	<script src="../etc/vue.min.js"></script>
+	<script src="../etc/vuex.js"></script>
+	<script src='app.js'></script>
+</body>
+</html>
