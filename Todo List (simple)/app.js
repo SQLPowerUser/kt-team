@@ -1,6 +1,5 @@
 +function () {
 	'use strict';
-	let BODY = document.body;
 
 	function QS(el,s) {return el.querySelector(s);}
 
@@ -74,7 +73,8 @@
 		template: '#todo-template',
 		data() {
 			return {
-				newNote: ''
+				newNote: '',
+				showEdit: false
 			}
 		},
 
@@ -98,11 +98,7 @@
 			},
 			deleteNote(idx) {
 				store.commit('deleteNote', idx);
-				QS(BODY,'textarea').focus();
 			},
-			clearFocus(e) {
-				e.target.blur();
-			}
 		},
 	}); // Vue.component('todo')
 
@@ -174,5 +170,4 @@
 	});
 
 	store.dispatch('loadInit');
-	QS(BODY,'textarea').focus();
 }();
