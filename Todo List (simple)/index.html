@@ -1,9 +1,13 @@
 <!DOCTYPE HTML>
 <html lang="ru">
 <head>
-	<link rel="shortcut icon" href="etc/to-do-list-icon.png" type="image/x-icon">
-	<title>Todo List</title>
+	<link rel="shortcut icon" href="../etc/to-do-list-icon.png" type="image/x-icon">
+	<title>Todo List (simple)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
@@ -14,50 +18,54 @@
 
 	<template id="todo-template">
 		<div>
-			<div class="environ">
+			<div class="space-b v-center mt10">
 				<p class="bold-1-1">Задачи</p>
-				<navigation></navigation>
+				<p :class="['cmd-ellipsis', {'b-red': showEdit}]" @click="showEdit = !showEdit">...</p>
 			</div>
+
+			<navigation></navigation>
 
 			<div class="central-part space-b">
 				<ol>
-					<li
-						v-for="el in paginatedNotes"
-						class="edit-box"
-						tabindex="-1"
-						@mouseleave="clearFocus($event)"
-					>{{ el.idx }}) {{ el.text }}
-						<span class="delete-note" @click="deleteNote(el.idx)"></span>
+					<li v-for="el in paginatedNotes" class="edit-box">
+						{{ el.idx }}) {{ el.text }}
+						<span
+							class="delete-note"
+							@click="deleteNote(el.idx)"
+							v-show="showEdit"
+						></span>
 					</li>
 				</ol>
 
 				<textarea
-					class="edit-box memo"
+					class="edit-box m10"
 					placeholder="Enter a title for this card..."
 					v-model="newNote"
 					@keyup.enter="addCard"
 				></textarea>
 			</div> <!-- class="central-part" -->
 
-			<div class="environ">
+			<div class="space-b v-center">
 				<div
 					class="button bold-1-1"
 					:class="{ 'button-disabled': trimNote == '' }"
 					@click="addCard"
 				>Add Card</div>
 
-				<navigation></navigation>
+				<p :class="['cmd-ellipsis', {'b-red': showEdit}]" @click="showEdit = !showEdit">...</p>
 			</div>
+
+			<navigation></navigation>
 
 		</div>
 	</template> <!-- id="todo-template" -->
 
 
 	<template id="navigation-template">
-		<div class="navigation">
-			<p v-if="hasPrev()" @click.prevent="prevPage()"> < </p>
-			<p v-if="hasFirst()" @click.prevent="changePage(1)">1</p>
-			<p v-if="hasFirst()" class="cursor-default">...</p>
+		<div class="navigation m10">
+			<p v-show="hasPrev()" @click.prevent="prevPage()"> < </p>
+			<p v-show="hasFirst()" @click.prevent="changePage(1)">1</p>
+			<p v-show="hasFirst()" class="cursor-default">...</p>
 
 			<p
 				v-for="page in pages"
@@ -65,15 +73,15 @@
 				:class="{ 'active-page': current == page }"
 			> {{ page }} </p>
 
-			<p v-if="hasLast()" class="cursor-default">...</p>
-			<p v-if="hasLast()" @click.prevent="changePage(pageCount)">{{ pageCount }}</p>
-			<p v-if="hasNext()" @click.prevent="nextPage"> > </p>
+			<p v-show="hasLast()" class="cursor-default">...</p>
+			<p v-show="hasLast()" @click.prevent="changePage(pageCount)">{{ pageCount }}</p>
+			<p v-show="hasNext()" @click.prevent="nextPage"> > </p>
 
 		</div>
 	</template> <!-- id="navigation-template"> -->
 
 
-	<script src="../etc/vue.min.js"></script>
+	<script src="../etc/vue.js"></script>
 	<script src="../etc/vuex.js"></script>
 	<script src='app.js'></script>
 </body>
