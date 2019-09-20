@@ -66,14 +66,14 @@ textarea {
 #appV > div:first-child {
 	display: flex;
 	flex-direction: column;
-	padding: 2px 8px;
+	padding: 8px;
 	border-radius: 5px;
 	background: #e0e3e6;
 	height: 100%;
 }
 
 #appV li {
-	margin-bottom: 7px;
+	margin-bottom: 5px;
 }
 
 
@@ -138,10 +138,6 @@ li.edit-box:hover {
 	background-size: cover;
 }
 
-
-.mt10 {
-	margin-top: 10px;
-}
 
 .m10 {
 	margin: 10px 0;
@@ -208,11 +204,15 @@ p.cursor-default {
 		padding: 5px;
 	}
 
+	#appV li {
+		margin-bottom: 4px;
+	}
+
 	.edit-box {
 		padding: 5px 10px 5px 3px;
 	}
 
 	#appV > div:first-child {
-		padding: 2px;
+		padding: 4px 2px;
 	}
 }

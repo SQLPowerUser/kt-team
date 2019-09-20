@@ -18,10 +18,12 @@
 
 	<template id="todo-template">
 		<div>
-			<div class="space-b v-center mt10">
+			<div class="space-b v-center">
 				<p class="bold-1-1">Задачи</p>
 				<p :class="['cmd-ellipsis', {'b-red': showEdit}]" @click="showEdit = !showEdit">...</p>
 			</div>
+
+			<navigation></navigation>
 
 			<div class="central-part space-b">
 				<ol>
@@ -52,8 +54,6 @@
 
 				<p :class="['cmd-ellipsis', {'b-red': showEdit}]" @click="showEdit = !showEdit">...</p>
 			</div>
-
-			<navigation></navigation>
 
 		</div>
 	</template> <!-- id="todo-template" -->

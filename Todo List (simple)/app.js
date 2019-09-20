@@ -1,8 +1,6 @@
 +function () {
 	'use strict';
 
-	function QS(el,s) {return el.querySelector(s);}
-
 	const initData = `[
 			{"text": "Task 99"},{"text": "Task 98"},{"text": "Task 97"},{"text": "Task 96"},{"text": "Task 95"},{"text": "Task 94"},{"text": "Task 93"},{"text": "Task 92"},{"text": "Task 91"},{"text": "Task 90"},{"text": "Task 89"},{"text": "Task 88"},{"text": "Task 87"},{"text": "Task 86"},{"text": "Task 85"},{"text": "Task 84"},{"text": "Task 83"},{"text": "Task 82"},{"text": "Task 81"},{"text": "Task 80"},{"text": "Task 79"},{"text": "Task 78"},{"text": "Task 77"},{"text": "Task 76"},{"text": "Task 75"},{"text": "Task 74"},{"text": "Task 73"},{"text": "Task 72"},{"text": "Task 71"},{"text": "Task 70"},
 			{"text": "Task 69"},{"text": "Task 68"},{"text": "Task 67"},{"text": "Task 66"},{"text": "Task 65"},{"text": "Task 64"},{"text": "Task 63"},{"text": "Task 62"},{"text": "Task 61"},{"text": "Task 60"},{"text": "Task 59"},{"text": "Task 58"},{"text": "Task 57"},{"text": "Task 56"},{"text": "Task 55"},{"text": "Task 54"},{"text": "Task 53"},{"text": "Task 52"},{"text": "Task 51"},{"text": "Task 50"},{"text": "Task 49"},{"text": "Task 48"},{"text": "Task 47"},{"text": "Task 46"},{"text": "Task 45"},{"text": "Task 44"},{"text": "Task 43"},{"text": "Task 42"},{"text": "Task 41"},{"text": "Task 40"},
