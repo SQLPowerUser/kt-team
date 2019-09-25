@@ -1,1 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+	<link rel="shortcut icon" href="../etc/firebase-icon.png" type="image/x-icon">
+	<title>Todo List (FireBase)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+	<div id="appV">
+		<todo></todo>
+	</div>
 
+	<div id="loading" class="abs-0"></div>
+
+	<template id="todo-template">
+		<div>
+			<div class="space-b v-center">
+				<p class="bold-1-1">Задачи</p>
+				<p :class="['cmd-ellipsis', {'b-red': showEdit}]" @click="showEdit = !showEdit">...</p>
+			</div>
+
+			<navigation></navigation>
+
+			<div class="central-part space-b">
+				<ol>
+					<li v-for="el in paginatedNotes" class="edit-box">
+						{{ el.num }}) {{ el.text }}
+						<span
+							class="cmd-bar img-error"
+							@click="deleteNote(el.id)"
+							v-show="showEdit"
+						></span>
+						<span
+							class="cmd-bar edit-note"
+							@click="editNote(el.id, el.text)"
+							v-show="showEdit"
+						></span>
+					</li>
+				</ol>
+
+				<textarea
+					class="edit-box m10"
+					placeholder="Enter a title for this card..."
+					v-model="newText"
+					@keyup.enter="addNote"
+				></textarea>
+			</div> <!-- class="central-part" -->
+
+			<div class="space-b v-center">
+				<div
+					class="button bold-1-1"
+					:class="{ 'button-disabled': newText.trim() == '' }"
+					@click="addNote"
+				>Add Card</div>
+
+				<p :class="['cmd-ellipsis', {'b-red': showEdit}]" @click="showEdit = !showEdit">...</p>
+			</div>
+
+			<div id="edit-window" class="abs-0">
+				<textarea
+					class="edit-box"
+					v-model="currentText"
+					@keyup.enter="updateNote"
+				></textarea>
+				<div class="edit-window-btns m10">
+					<div class="button-dialog" @click="updateNote">
+						<p class="img-ok"></p>
+						<p :class="{ 'button-disabled': currentText.trim() == '' }">Save</p>
+					</div>
+					<div class="button-dialog" @click="cancelNote">
+						<p class="img-error"></p>
+						<p>Cancel</p>
+					</div>
+				</div>
+			</div> <!-- id="edit-window" -->
+
+		</div>
+	</template> <!-- id="todo-template" -->
+
+
+	<template id="navigation-template">
+		<div class="navigation m10">
+			<p v-show="hasPrev()" @click.prevent="prevPage()"> < </p>
+			<p v-show="hasFirst()" @click.prevent="changePage(1)">1</p>
+			<p v-show="hasFirst() && hasDiffFirst()" class="cursor-default">...</p>
+
+			<p
+				v-for="page in pages"
+				@click.prevent="changePage(page)"
+				:class="{ 'active-page': current == page }"
+			> {{ page }} </p>
+
+			<p v-show="hasLast() && hasDiffLast()" class="cursor-default">...</p>
+			<p v-show="hasLast()" @click.prevent="changePage(pageCount)">{{ pageCount }}</p>
+			<p v-show="hasNext()" @click.prevent="nextPage"> > </p>
+
+		</div>
+	</template> <!-- id="navigation-template"> -->
+
+
+	<script src="../etc/vue.js"></script>
+	<script src="../etc/vuex.js"></script>
+	<script src="../etc/firebase-app.js"></script>
+	<script src="../etc/firebase-firestore.js"></script>
+	<script src='app.js'></script>
+</body>
+</html>
