@@ -170,6 +170,7 @@
 				newText: '',
 				currentText: '',
 				docId: '',
+				isCompleted: false,
 				showEdit: false
 			}
 		},
@@ -185,25 +186,30 @@
 				let txt = this.newText.trim();
 				if (!txt) {return;}
 				showModalLoading();
-				dbRef.add({text: txt, isCompleted: false, createTime: new Date()}).then(function() {
+				let params = {text: txt, isCompleted: false, createTime: new Date()};
+
+				dbRef.add(params).then(function() {
 					goPage(1);
 				}).catch(function(er) {
 					errF(er);
 				});
 			},
 
-			editNote(docId, docText) {
+			editNote(docId, docText, isCompleted) {
 				showModal(gid('edit-window'));
 				QS(gid('edit-window'), 'textarea').focus();
 				this.docId = docId;
 				this.currentText = docText;
+				this.isCompleted = isCompleted;
 			},
 
 			updateNote() {
 				let txt = this.currentText.trim();
 				if (!txt) {return;}
 				showModalLoading();
-				dbRef.doc(this.docId).update({text: txt}).then(function() {
+				let params = {text: txt, isCompleted: this.isCompleted};
+
+				dbRef.doc(this.docId).update(params).then(function() {
 					goPage(store.state.pageNumber+1);
 				}).catch(function(er) {
 					errF(er);

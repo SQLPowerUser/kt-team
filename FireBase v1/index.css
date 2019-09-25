@@ -58,6 +58,10 @@ textarea {
 	overflow: hidden;
 }
 
+input[type="checkbox"] {
+	vertical-align: middle;
+}
+
 
 #appV {
 	height: 100%;
@@ -174,12 +178,6 @@ li.edit-box:hover {
 }
 .button:active {padding: 7px 13px 5px 15px;}
 
-.button-disabled {
-	color: #ccc;
-	background: linear-gradient(to bottom, #f9f9f9,#e4e5e7);
-	border: 1px solid #cfcfcf;
-}
-
 
 .button-dialog {
 	display: flex;
@@ -201,10 +199,28 @@ li.edit-box:hover {
 	background-size: cover;
 }
 
+.button-disabled {
+	color: #ccc;
+	background: linear-gradient(to bottom, #f9f9f9,#e4e5e7);
+	border: 1px solid #cfcfcf;
+}
+
 .img-ok {
 	width: 16px !important;
 	height: 16px !important;
 	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAMAAABhEH5lAAAAWlBMVEVHcEzd8d3x+e+IzYuMz4+GzYmt3a5nwG10xnhww3Tp9url9efZ79mm2qeAy4RxxXX///98yYBqwXCQ0ZOZ1Zz3/Pb9/vzs9+z6/fn1+/Si2aTG6Ma747zP689l3fpLAAAAAXRSTlMAQObYZgAAAItJREFUGNNtkEkSgzAMBAcwtA3Y7FuW/38zBwMhKfrYpZJGI0lSUuTO5UWigzJjJyujqRpObCVJqeWCTSUZfjBSfR15ALX813RL68ArnCbf5hEIcocZ1i0DcHLA08A4Lx1RBejXqSvaZI8X5AGzTu273xf4GGJIX+eV+i7q3UOq7P/bd+XECpvmqPADHqcJP0UrSDwAAAAASUVORK5CYII=');
+}
+
+.lbl-task-completed {
+	flex: 1;
+	line-height: 12px;
+}
+
+.span-is-completed {
+	display: inline-block;
+	position: relative;
+	top: 3px;
+	background-size: cover;
 }
 
 .navigation {
@@ -292,12 +308,8 @@ p.cursor-default {
 	height: 80px;
 }
 
-.edit-window-btns {
-	display: flex;
-	justify-content: flex-end;
-}
 
-.edit-window-btns div:last-child {
+.btn-cancel {
 	margin-left: 5px;
 }
 

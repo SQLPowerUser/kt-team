@@ -29,8 +29,10 @@
 
 			<div class="central-part space-b">
 				<ol>
-					<li v-for="el in paginatedNotes" class="edit-box">
-						{{ el.num }}) {{ el.text }}
+					<li v-for="el in paginatedNotes" class="edit-box">						
+						{{ el.num }})
+						<span class="img-ok span-is-completed" v-show="el.isCompleted"></span>
+						{{ el.text }}
 						<span
 							class="cmd-bar img-error"
 							@click="deleteNote(el.id)"
@@ -38,7 +40,7 @@
 						></span>
 						<span
 							class="cmd-bar edit-note"
-							@click="editNote(el.id, el.text)"
+							@click="editNote(el.id, el.text, el.isCompleted)"
 							v-show="showEdit"
 						></span>
 					</li>
@@ -68,16 +70,24 @@
 					v-model="currentText"
 					@keyup.enter="updateNote"
 				></textarea>
-				<div class="edit-window-btns m10">
-					<div class="button-dialog" @click="updateNote">
-						<p class="img-ok"></p>
-						<p :class="{ 'button-disabled': currentText.trim() == '' }">Save</p>
-					</div>
-					<div class="button-dialog" @click="cancelNote">
-						<p class="img-error"></p>
-						<p>Cancel</p>
-					</div>
-				</div>
+
+				<div class="space-b v-center m10">
+					<label class="lbl-task-completed">
+						<input type="checkbox" v-model="isCompleted">
+						Task is completed
+					</label>
+
+						<div class="button-dialog" @click="updateNote" :class="{ 'button-disabled': currentText.trim() == '' }">
+							<p class="img-ok"></p>
+							<p>Save</p>
+						</div>
+
+						<div class="button-dialog btn-cancel" @click="cancelNote">
+							<p class="img-error"></p>
+							<p>Cancel</p>
+						</div>
+
+				</div> <!-- class="space-b m10" -->
 			</div> <!-- id="edit-window" -->
 
 		</div>
