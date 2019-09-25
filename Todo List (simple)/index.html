@@ -28,10 +28,15 @@
 			<div class="central-part space-b">
 				<ol>
 					<li v-for="el in paginatedNotes" class="edit-box">
-						{{ el.idx }}) {{ el.text }}
+						{{ el.id }}) {{ el.text }}
 						<span
-							class="delete-note"
-							@click="deleteNote(el.idx)"
+							class="cmd-bar img-error"
+							@click="deleteNote(el.id)"
+							v-show="showEdit"
+						></span>
+						<span
+							class="cmd-bar edit-note"
+							@click="editNote(el.id, el.text)"
 							v-show="showEdit"
 						></span>
 					</li>
@@ -40,20 +45,38 @@
 				<textarea
 					class="edit-box m10"
 					placeholder="Enter a title for this card..."
-					v-model="newNote"
-					@keyup.enter="addCard"
+					v-model="newText"
+					@keyup.enter="addNote"
 				></textarea>
 			</div> <!-- class="central-part" -->
 
 			<div class="space-b v-center">
 				<div
 					class="button bold-1-1"
-					:class="{ 'button-disabled': trimNote == '' }"
-					@click="addCard"
+					:class="{ 'button-disabled': newText.trim() == '' }"
+					@click="addNote"
 				>Add Card</div>
 
 				<p :class="['cmd-ellipsis', {'b-red': showEdit}]" @click="showEdit = !showEdit">...</p>
 			</div>
+
+			<div id="edit-window" class="abs-0">
+				<textarea
+					class="edit-box"
+					v-model="currentText"
+					@keyup.enter="updateNote"
+				></textarea>
+				<div class="edit-window-btns m10">
+					<div class="button-dialog" @click="updateNote">
+						<p class="img-ok"></p>
+						<p :class="{ 'button-disabled': currentText.trim() == '' }">Save</p>
+					</div>
+					<div class="button-dialog" @click="cancelNote">
+						<p class="img-error"></p>
+						<p>Cancel</p>
+					</div>
+				</div>
+			</div> <!-- id="edit-window" -->
 
 		</div>
 	</template> <!-- id="todo-template" -->
@@ -63,7 +86,7 @@
 		<div class="navigation m10">
 			<p v-show="hasPrev()" @click.prevent="prevPage()"> < </p>
 			<p v-show="hasFirst()" @click.prevent="changePage(1)">1</p>
-			<p v-show="hasFirst()" class="cursor-default">...</p>
+			<p v-show="hasFirst() && hasDiffFirst()" class="cursor-default">...</p>
 
 			<p
 				v-for="page in pages"
@@ -71,7 +94,7 @@
 				:class="{ 'active-page': current == page }"
 			> {{ page }} </p>
 
-			<p v-show="hasLast()" class="cursor-default">...</p>
+			<p v-show="hasLast() && hasDiffLast()" class="cursor-default">...</p>
 			<p v-show="hasLast()" @click.prevent="changePage(pageCount)">{{ pageCount }}</p>
 			<p v-show="hasNext()" @click.prevent="nextPage"> > </p>
 
